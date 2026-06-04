@@ -1,0 +1,35 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "COMP229 Class Examples for Express Backend application",
+  "keywords": [
+    "COMP229",
+    "Express",
+    "Node.js",
+    "Backend",
+    "MERN"
+  ],
+  "homepage": "https://github.com/JViniX/COMP229-S2026-CodeExamples#readme",
+  "bugs": {
+    "url": "https://github.com/JViniX/COMP229-S2026-CodeExamples/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JViniX/COMP229-S2026-CodeExamples.git"
+  },
+  "license": "MIT",
+  "author": "Julio Vinicius",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "body-parser": "^2.2.2",
+    "compression": "^1.8.1",
+    "cors": "^2.8.6",
+    "express": "^5.2.1",
+    "http-errors": "^2.0.1",
+    "morgan": "^1.11.0"
+  }
+}
