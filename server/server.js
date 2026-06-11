@@ -1,47 +1,43 @@
 const express = require('express');
+const logger = require('morgan');
+const createError = require('http-errors');
+const cors = require('cors');
 const app = express();
 
+const db = require('./config/db');
+db().catch(console.dir);
+
+// Adds headers: Access-Control-Allow-Origin: *
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// Routers import
 let indexRouter = require('./app/routes/index');
+let projectsRouter = require('./app/routes/projects');
 
-function logger(req, res, next){
-    console.log(req.method, req.url);
-    next();
-}
-
-function welcome(req, res, next){
-    res.setHeader('Content-Type', 'text/plain');
-    res.send("Welcome do my Backend API Server.")
-}
-
-function notFound(req, res, next){
-    res.setHeader('Content-Type', 'text/plain');
-    res.send("Page Not Found!")
-}
-
-const user = {
-    name: 'John Smith',
-    email: 'john@smith.ca'
-}
-
-function getUser(req, res, next){
-    res.header('Content-Type', 'application/json');
-    
-    res.json(user);
-}
-
-function getEmail(req, res, next){
-    let userEmail = req.params.email;
-    res.status(201);
-    res.send("Email sent: "+ userEmail);
-}
-
-app.use(logger);
-app.get("/", welcome);
-app.get('/getuser', getUser);
-app.get('/sendemail/:email', getEmail);
+// Middlewares assignment
+app.use(logger('dev'));
 app.use('/api', indexRouter);
-app.use(notFound);
+app.use('/api/projects', projectsRouter);
 
-app.listen(3000, ()=>{
+// catch 404 and foward to error handler
+app.use(function (req, res, next) {
+    next(createError(404));
+})
+
+// error handler
+app.use(function (err, req, res, next) {
+    res.status(err.status || 500);
+    res.json(
+        {
+            "success": false,
+            "message": err.message
+        }
+    );
+});
+
+// Initialize the server
+app.listen(3000, () => {
     console.log('Server running at http://localhost:3000/');
 });
