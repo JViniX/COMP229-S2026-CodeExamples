@@ -15,11 +15,15 @@ app.use(express.urlencoded({ extended: true }));
 // Routers import
 let indexRouter = require('./app/routes/index');
 let projectsRouter = require('./app/routes/projects');
+let usersRouter = require('./app/routes/users');
+let authRouter = require('./app/controllers/auth');
 
 // Middlewares assignment
 app.use(logger('dev'));
-app.use('/api', indexRouter);
+app.use('/', indexRouter);
+app.use('/auth', authRouter);
 app.use('/api/projects', projectsRouter);
+app.use('/api/users', usersRouter);
 
 // catch 404 and foward to error handler
 app.use(function (req, res, next) {
