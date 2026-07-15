@@ -16,7 +16,7 @@ app.use(express.urlencoded({ extended: true }));
 let indexRouter = require('./app/routes/index');
 let projectsRouter = require('./app/routes/projects');
 let usersRouter = require('./app/routes/users');
-let authRouter = require('./app/controllers/auth');
+let authRouter = require('./app/routes/auth');
 
 // Middlewares assignment
 app.use(logger('dev'));

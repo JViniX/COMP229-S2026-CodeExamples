@@ -3,6 +3,7 @@ let ProjectsModel = require('../models/projects');
 module.exports.add = async function (req, res, next) {
     try {
         let newProject = ProjectsModel(req.body);
+        newProject.owner = req.auth.id || "";
 
         let result = await ProjectsModel.create(newProject);
 
@@ -24,7 +25,7 @@ module.exports.add = async function (req, res, next) {
 module.exports.getById = async function (req, res, next) {
     try {
         let projectId = req.params.id;
-        let project = await ProjectsModel.findOne({ _id: projectId });
+        let project = await ProjectsModel.findOne({ _id: projectId }).populate('owner');
 
         res.json({
             success: true,

@@ -41,3 +41,15 @@ module.exports.signin = async function (req, res, next) {
 
     }
 }
+
+module.exports.validateToken = expressjwt({
+    secret: secretkey,
+    algorithms: ['HS512'],
+    userProperty: 'auth'
+})
+
+module.exports.logToken = async function (req, res, next) {
+    console.log(req.headers);
+    console.log(req.auth);
+    next();
+}
