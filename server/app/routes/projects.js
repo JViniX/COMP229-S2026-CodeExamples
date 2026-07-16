@@ -10,9 +10,11 @@ router.get("/",
     projectsController.getAll);
 router.post("/",     
     // authController.validateToken, 
-    authController.logToken, 
+    // authController.logToken, 
     projectsController.add);
-router.get("/:id", authController.validateToken, projectsController.getById);
+router.get("/:id", 
+    // authController.validateToken, 
+    projectsController.getById);
 router.put("/:id", projectsController.update);
 router.delete("/:id", projectsController.remove);
 
