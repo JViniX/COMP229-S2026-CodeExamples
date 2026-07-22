@@ -1,12 +1,19 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useState } from "react"
-import { create } from "../../datasource/api-users";
+import { signin } from "../../datasource/api-users";
 import UserModel from "../../datasource/userModel";
+import { authenticate } from "./auth-helper";
 
-function Signup() {
+function Signin() {
+
+    const { state } = useLocation();
+    const { from } = state || { from: {pathname: '/'} };
 
     let navigate = useNavigate();
-    let [user, setUser] = useState(new UserModel());
+    let [user, setUser] = useState({
+        email: '',
+        password: ''
+    });
     let [errorMsg, setErrorMsg] = useState('')
 
     const handleChange = (event) => {
@@ -17,14 +24,14 @@ function Signup() {
     const handleSubmit = (event) => {
         event.preventDefault(); // Cancels the default action of the form submission (page reload)  
         setErrorMsg("");
-        if (user.password !== document.getElementById('confirmPasswordTextField').value) {
-            setErrorMsg("ERROR: Passwords don't match!");
-        } else {
-            create(user)
+
+        signin(user)
             .then(res => {
+                console.log(res);
                 if (res && res.success) {
-                    alert(res.message);
-                    navigate("/users/signin");
+                    authenticate(res.token, ()=>{
+                        navigate(from, {replace: true});
+                    });
                 }
                 else {
                     setErrorMsg(res.message);
@@ -33,40 +40,16 @@ function Signup() {
                 setErrorMsg(err.message);
                 console.log(err)
             });
-        }
     }
 
-return (
+    return (
         // -- Content for the Add user page --
         <div className="container" style={{ paddingTop: 80 }}>
             <div className="row">
                 <div className="offset-md-3 col-md-6">
-                    <h1>Add a new user</h1>
+                    <h1>Sign In</h1>
                     <p className="flash"><span>{errorMsg}</span></p>
                     <form onSubmit={handleSubmit} className="form">
-                        <div className="form-group">
-                            <label htmlFor="firstnameTextField">First Name</label>
-                            <input type="text" className="form-control"
-                                id="firstnameTextField"
-                                placeholder="Enter first name"
-                                name="firstname"
-                                value={user.firstname || ''}
-                                onChange={handleChange}
-                                required>
-                            </input>
-                        </div>
-                        <br />
-                        <div className="form-group">
-                            <label htmlFor="lastnameTextField">Last name</label>
-                            <input type="text" className="form-control"
-                                id="lastnameTextField"
-                                placeholder="Enter last name"
-                                name="lastname"
-                                value={user.lastname || ''}
-                                onChange={handleChange}>
-                            </input>
-                        </div>
-                        <br />
 
                         <div className="form-group">
                             <label htmlFor="emailTextField">Email</label>
@@ -90,15 +73,6 @@ return (
                             </input>
                         </div>
                         <br />
-                        <div className="form-group">
-                            <label htmlFor="confirmPasswordTextField">Confirm Password</label>
-                            <input type="password" className="form-control"
-                                id="confirmPasswordTextField"
-                                placeholder="Confirm password">
-                            </input>
-                        </div>
-                        <br />
-
                         <br />
 
                         <button className="btn btn-primary" type="submit">
@@ -106,9 +80,14 @@ return (
                             Submit
                         </button>
                         &nbsp; &nbsp;
-                        <Link href="#" to="/users/signin" className="btn btn-warning">
+                        <Link href="#" to="/" className="btn btn-warning">
                             <i className="fas fa-undo"></i>
                             Cancel
+                        </Link>
+
+                        &nbsp; &nbsp;
+                        <Link to="/users/signup" style={{ textDecoration: 'none' }}>
+                            <i className="fas fa-user-plus"></i> Sign-up
                         </Link>
 
                     </form>
@@ -119,4 +98,4 @@ return (
     );
 }
 
-export default Signup;
+export default Signin;
