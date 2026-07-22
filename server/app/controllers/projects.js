@@ -3,7 +3,7 @@ let ProjectsModel = require('../models/projects');
 module.exports.add = async function (req, res, next) {
     try {
         let newProject = ProjectsModel(req.body);
-        newProject.owner = req.auth.id || "";
+        // newProject.owner = req.auth.id || "";
 
         let result = await ProjectsModel.create(newProject);
 

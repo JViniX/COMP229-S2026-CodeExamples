@@ -1,5 +1,6 @@
 import Counter from "./counter";
 import IncrementDecrement from "./IncrementDecrement";
+import ControlledComponent from "./ControlledComponent";
 
 function Home() {
     return (
@@ -9,6 +10,7 @@ function Home() {
                 <p>Hello everyone!</p>
                 <Counter />
                 <IncrementDecrement />
+                <ControlledComponent />
             </div>
         </div>
 
