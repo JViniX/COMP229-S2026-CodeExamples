@@ -13,6 +13,9 @@ import ListProjet from "./components/project/ListProjects";
 import AddProject from "./components/project/AddProject";
 import EditProject from "./components/project/EditProject";
 import Signup from "./components/auth/signup";
+import Signin from "./components/auth/signin";
+
+import PrivateRoute from "./components/auth/PrivateRoute";
 
 function MainRouter(){
     return(
@@ -25,10 +28,24 @@ function MainRouter(){
                 <Route exact path="/services" element={<Services />} />
                 <Route exact path="/references" element={<References />} />
                 <Route exact path="/contact" element={<Contact />} />
-                <Route exact path="/admin/projects" element={<ListProjet />} />
-                <Route exact path="/admin/projects/add" element={<AddProject />} />
-                <Route exact path="/admin/project/edit/:id" element={<EditProject />} />
+                <Route exact path="/admin/projects" element={
+                    <PrivateRoute>
+                        <ListProjet />
+                    </PrivateRoute>
+                } />
+
+                <Route exact path="/admin/projects/add" element={
+                    <PrivateRoute>
+                        <AddProject />
+                    </PrivateRoute>
+                } />
+                <Route exact path="/admin/project/edit/:id" element={
+                    <PrivateRoute>
+                        <EditProject />
+                    </PrivateRoute>
+                } />
                 <Route exact path="/users/signup" element={<Signup />} />
+                <Route exact path="/users/signin" element={<Signin />} />
                 <Route path="*" element={<NotFound />} />
             </Routes>
         </div>

@@ -6,7 +6,7 @@ let secretkey = process.env.SECRETKEY;
 
 module.exports.signin = async function (req, res, next) {
     try {
-        console.log(req.body);
+        // console.log(req.body);
         let user = await UsersModel.findOne({ "email": req.body.email });
 
         if (!user) {
@@ -17,7 +17,9 @@ module.exports.signin = async function (req, res, next) {
         }
 
         let payload = {
-            id: user._id
+            id: user._id,
+            username: user.fullName,
+            email: user.email
         }
 
         // Generates the token
