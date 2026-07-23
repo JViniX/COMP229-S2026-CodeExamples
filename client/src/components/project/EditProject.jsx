@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import ProjectForm from './ProjectForm';
-import ProjectModel from '../../datasource/ProjectModel';
+import ProjectModel from '../../datasource/projectModel';
 import { read, update } from '../../datasource/api-projects';
 
 function EditProject() {
