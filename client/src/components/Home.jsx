@@ -1,4 +1,4 @@
-import Counter from "./counter";
+import Counter from "./Counter";
 import IncrementDecrement from "./IncrementDecrement";
 import ControlledComponent from "./ControlledComponent";
 
