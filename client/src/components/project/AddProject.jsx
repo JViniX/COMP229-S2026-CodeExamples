@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ProjectForm from './ProjectForm';
-import ProjectModel from '../../datasource/ProjectModel';
+import ProjectModel from '../../datasource/projectModel';
 import { create } from '../../datasource/api-projects';
 
 function AddProject() {
