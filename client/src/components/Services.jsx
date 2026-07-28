@@ -10,11 +10,13 @@ const data = [
 
 function Services() {
     return (
-        <div>
+        <div className="container-fluid" >
             <h1>Services</h1>
-            {data.map((service, index)=>(
-                <RowComponent key={index} item={service} />
-            ))}
+            <div className="d-flex flex-wrap gap-3 justify-content-center">
+                {data.map((service, index) => (
+                    <RowComponent key={index} item={service} />
+                ))}
+            </div>
         </div>
     )
 }

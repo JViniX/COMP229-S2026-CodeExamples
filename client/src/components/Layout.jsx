@@ -51,41 +51,47 @@ function Layout() {
                 </NavLink>
               </li>
 
-              <li className="nav-item">
-                {!isAuthenticated() &&
+              {!isAuthenticated() &&
+                <li className="nav-item">
                   <NavLink className="nav-link" to="/users/signin">
                     <i className="fa-solid fa-right-to-bracket"></i> Sign in
-                  </NavLink>}
-                {isAuthenticated() &&
-                  <Link className="nav-link" to="/" onClick={signOutClick}>
-                    <i className="fa-solid fa-right-from-bracket"></i> Sign-out ({getUsername()})
-                  </Link>}
-              </li>
+                  </NavLink>
+                </li>
+              }
+              {isAuthenticated() &&
 
-              <li className="nav-item dropdown">
-                <Link className='nav-link dropdown-toggle' to="#" role="button" data-bs-toggle="dropdown">
-                  <i className="fa-solid fa-barcode"></i> Admin
-                </Link>
-                <ul className="dropdown-menu">
-                  <li>
-                    <NavLink className="dropdown-item" to="/admin/projects">
-                      <i className="fa-regular fa-rectangle-list"></i> Project List
-                    </NavLink>
-                  </li>
-                  <li>
-                    <NavLink className="dropdown-item" to="/admin/projects/add">
-                      <i className="fa-solid fa-square-plus"></i> Add a new Item
-                    </NavLink>
-                  </li>
-                </ul>
-              </li >
+                <li className="nav-item dropdown">
+                  <Link className='nav-link dropdown-toggle' to="#" role="button" data-bs-toggle="dropdown">
+                    <i className="fa-solid fa-user"></i> {getUsername()}
+                  </Link>
+                  <ul className="dropdown-menu">
+                    <li>
+                      <NavLink className="dropdown-item" to="/admin/projects">
+                        <i className="fa-regular fa-rectangle-list"></i> Project List
+                      </NavLink>
+                    </li>
+                    <li>
+                      <NavLink className="dropdown-item" to="/admin/projects/add">
+                        <i className="fa-solid fa-square-plus"></i> Add a new Item
+                      </NavLink>
+                    </li>
+                    <li>
+                      <Link className="dropdown-item" to="/" onClick={signOutClick}>
+                        <i className="fa-solid fa-right-from-bracket"></i> Sign-out
+                      </Link>
+                    </li>
+                  </ul>
+                </li >
+
+              }
+
             </ul >
           </div>
         </div>
-      </nav>
+      </nav >
       <div className="container" style={{ paddingTop: 60 }} />
       <Outlet />
-    </div>
+    </div >
   )
 }
 
