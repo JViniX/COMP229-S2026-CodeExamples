@@ -27,12 +27,13 @@ const data = [
 
 function Projects() {
     return (
-        <div>
+        <div className="container-fluid" >
             <h1>My Projects</h1>
-
-            {data.map((project, index)=>(
-                <RowComponent key={index} item={project}/>
-            ))}
+            <div className="d-flex flex-wrap gap-3 justify-content-center">
+                {data.map((project, index) => (
+                    <RowComponent key={index} item={project} />
+                ))}
+            </div>
         </div>
 
     )

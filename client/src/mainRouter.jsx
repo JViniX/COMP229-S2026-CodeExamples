@@ -20,33 +20,34 @@ import PrivateRoute from "./components/auth/PrivateRoute";
 function MainRouter(){
     return(
         <div>
-            <Layout />
             <Routes>
-                <Route exact path="/" element={<Home />} />
-                <Route exact path="/about" element={<About />} />
-                <Route exact path="/projects" element={<Projects />} />
-                <Route exact path="/services" element={<Services />} />
-                <Route exact path="/references" element={<References />} />
-                <Route exact path="/contact" element={<Contact />} />
-                <Route exact path="/admin/projects" element={
-                    <PrivateRoute>
-                        <ListProjet />
-                    </PrivateRoute>
-                } />
+                <Route path="/" element={<Layout />}>
+                    <Route index element={<Home />} />
+                    <Route exact path="/about" element={<About />} />
+                    <Route exact path="/projects" element={<Projects />} />
+                    <Route exact path="/services" element={<Services />} />
+                    <Route exact path="/references" element={<References />} />
+                    <Route exact path="/contact" element={<Contact />} />
+                    <Route exact path="/admin/projects" element={
+                        <PrivateRoute>
+                            <ListProjet />
+                        </PrivateRoute>
+                    } />
 
-                <Route exact path="/admin/projects/add" element={
-                    <PrivateRoute>
-                        <AddProject />
-                    </PrivateRoute>
-                } />
-                <Route exact path="/admin/project/edit/:id" element={
-                    <PrivateRoute>
-                        <EditProject />
-                    </PrivateRoute>
-                } />
-                <Route exact path="/users/signup" element={<Signup />} />
-                <Route exact path="/users/signin" element={<Signin />} />
-                <Route path="*" element={<NotFound />} />
+                    <Route exact path="/admin/projects/add" element={
+                        <PrivateRoute>
+                            <AddProject />
+                        </PrivateRoute>
+                    } />
+                    <Route exact path="/admin/project/edit/:id" element={
+                        <PrivateRoute>
+                            <EditProject />
+                        </PrivateRoute>
+                    } />
+                    <Route exact path="/users/signup" element={<Signup />} />
+                    <Route exact path="/users/signin" element={<Signin />} />
+                    <Route path="*" element={<NotFound />} />
+                </Route>
             </Routes>
         </div>
     )

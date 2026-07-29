@@ -1,11 +1,11 @@
 function RowComponent({item}){
     return(
-        <div className="row">
+        <div className="card" style={{ width: 400 }}>
             <img src={item.imagePath} alt="Item Image" />
-            <div className="text-content">
-                <h3>{item.title}</h3>
-                <p>{item.description}</p>
-                <p>{item.completion}</p>
+            <div className="card-body">
+                <h3 class="card-title">{item.title}</h3>
+                <p class="card-text">{item.description}</p>
+                <p class="card-text">{item.completion}</p>
             </div>
         </div>
     )
