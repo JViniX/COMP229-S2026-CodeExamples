@@ -17,25 +17,11 @@ const create = async (user) => {
         return await response.json();
     } catch (error) {
         console.log(error);
+                return {
+            success: false,
+            message: error?.message || 'Unable to connect to the projects API.'
+        };
     }
 }
 
-const signin = async (user) => {
-    try {
-        let response = await fetch(baseUrl + "/auth/signin", {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(user)
-        });
-
-        return await response.json();
-    } catch (error) {
-        console.log(error);
-    }
-}
-
-
-export { create, signin };
+export { create };

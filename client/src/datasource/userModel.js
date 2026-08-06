@@ -1,6 +1,7 @@
 class UserModel
 {
-    constructor(firstname, lastname, email, password, username){
+    constructor(uid, firstname, lastname, email, password, username){
+        this.uid = uid
         this.firstname = firstname
         this.lastname = lastname
         this.email = email

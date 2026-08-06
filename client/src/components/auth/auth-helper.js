@@ -1,12 +1,10 @@
 import { jwtDecode } from 'jwt-decode'
 
-const authenticate = (token, cb)=>{
+const authenticate = (payload, cb)=>{
     if(typeof window !== "undefined"){
-        sessionStorage.setItem("token", token);
-
-        let payload = jwtDecode(token);
-        sessionStorage.setItem("userId", payload.id);
-        sessionStorage.setItem("username", payload.username);
+        sessionStorage.setItem("token", payload.accessToken);
+        sessionStorage.setItem("userId", payload.uid);
+        sessionStorage.setItem("username", payload.displayName);
         sessionStorage.setItem("email", payload.email);
     }
     cb();
