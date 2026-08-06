@@ -7,6 +7,9 @@ const app = express();
 const db = require('./config/db');
 db().catch(console.dir);
 
+let firebaseAdmin = require('./config/firebaseAdmin');
+firebaseAdmin();
+
 // Adds headers: Access-Control-Allow-Origin: *
 app.use(cors());
 app.use(express.json());
@@ -16,12 +19,10 @@ app.use(express.urlencoded({ extended: true }));
 let indexRouter = require('./app/routes/index');
 let projectsRouter = require('./app/routes/projects');
 let usersRouter = require('./app/routes/users');
-let authRouter = require('./app/routes/auth');
 
 // Middlewares assignment
 app.use(logger('dev'));
 app.use('/', indexRouter);
-app.use('/auth', authRouter);
 app.use('/api/projects', projectsRouter);
 app.use('/api/users', usersRouter);
 

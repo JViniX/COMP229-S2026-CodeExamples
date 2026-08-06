@@ -16,6 +16,10 @@ const list = async () => {
         return await response.json();
     } catch (error) {
         console.log(error);
+        return {
+            success: false,
+            message: error?.message || 'Unable to connect to the projects API.'
+        };
     }
 }
 
@@ -33,6 +37,10 @@ const remove = async (id) => {
         return await response.json();
     } catch (error) {
         console.log(error);
+        return {
+            success: false,
+            message: error?.message || 'Unable to connect to the projects API.'
+        };
     }
 }
 
@@ -51,6 +59,10 @@ const create = async (project) => {
         return await response.json();
     } catch (error) {
         console.log(error);
+        return {
+            success: false,
+            message: error?.message || 'Unable to connect to the projects API.'
+        };
     }
 }
 
@@ -69,6 +81,10 @@ const update = async (id, project) => {
         return await response.json();
     } catch (error) {
         console.log(error);
+        return {
+            success: false,
+            message: error?.message || 'Unable to connect to the projects API.'
+        };
     }
 }
 
@@ -86,6 +102,10 @@ const read = async (id) => {
         return await response.json();
     } catch (error) {
         console.log(error);
+        return {
+            success: false,
+            message: error?.message || 'Unable to connect to the projects API.'
+        };
     }
 }
 

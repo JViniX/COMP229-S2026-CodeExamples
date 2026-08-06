@@ -1,27 +1,41 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react"
+import MyModal from "../MyModal";
 import { create } from "../../datasource/api-users";
 import UserModel from "../../datasource/userModel";
+import { auth } from "../../firebase";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 
 function Signup() {
 
     let navigate = useNavigate();
     let [user, setUser] = useState(new UserModel());
-    let [errorMsg, setErrorMsg] = useState('')
+    let [errorMsg, setErrorMsg] = useState('');
+    let [isUploading, setIsUploading] = useState(false);
 
     const handleChange = (event) => {
         const { name, value } = event.target;
         setUser((prevUser) => ({ ...prevUser, [name]: value }));
     }
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault(); // Cancels the default action of the form submission (page reload)  
         setErrorMsg("");
         if (user.password !== document.getElementById('confirmPasswordTextField').value) {
             setErrorMsg("ERROR: Passwords don't match!");
         } else {
-            create(user)
-            .then(res => {
+            try {
+                setIsUploading(true);
+                let userCredential = await createUserWithEmailAndPassword(auth, user.email, user.password);
+                console.log(userCredential);
+
+                let userFb = userCredential.user;
+
+                await updateProfile(userFb, {
+                    displayName: user.firstname + " " + user.lastname
+                });
+
+                let res = await create(userFb); // Creates the user in the backend.
                 if (res && res.success) {
                     alert(res.message);
                     navigate("/users/signin");
@@ -29,16 +43,21 @@ function Signup() {
                 else {
                     setErrorMsg(res.message);
                 }
-            }).catch(err => {
+            } catch (error) {
                 setErrorMsg(err.message);
                 console.log(err)
-            });
+            } finally {
+                setIsUploading(false);
+            }
         }
     }
 
-return (
+    return (
         // -- Content for the Add user page --
         <div className="container" style={{ paddingTop: 80 }}>
+            {isUploading &&
+                <MyModal message="Creating user..." />
+            }
             <div className="row">
                 <div className="offset-md-3 col-md-6">
                     <h1>Add a new user</h1>

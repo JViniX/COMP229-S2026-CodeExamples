@@ -6,17 +6,20 @@ import ListItemProject from './ListItemProject';
 function ListProjet() {
     let [projectList, setProjectList] = useState([]);
     let [isLoading, setIsLoading] = useState(true);
+    let [errorMsg, setErrorMsg] = useState('')
 
     const loadProjects = () => {
         list()
             .then((res) => {
                 if (res.success) {
                     setProjectList(res.data || []);
-                    setIsLoading(false);
+                } else {
+                    setErrorMsg(res.message);
                 }
+                setIsLoading(false);
             })
             .catch((err) => {
-                alert(err.message);
+                setErrorMsg(err.message);
                 console.log(err);
             });
     }
@@ -34,7 +37,7 @@ function ListProjet() {
         <main className="container" style={{ paddingTop: 80 }}>
             <div className="row">
                 <h1>Project List</h1>
-
+                <p className="flash"><span>{errorMsg}</span></p>
                 <div>
                     <Link to="/admin/projects/add" className="btn btn-primary align-self-end" role="button">
                         <i className="fas fa-plus-circle"></i>
