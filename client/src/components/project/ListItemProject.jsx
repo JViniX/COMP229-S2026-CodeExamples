@@ -12,7 +12,7 @@ function ListItemProject({ project, onRemoved }) {
                         alert(res.message);
                         onRemoved();
                     }
-                    else{
+                    else {
                         alert(res.message);
                     }
                 })
@@ -25,6 +25,15 @@ function ListItemProject({ project, onRemoved }) {
 
     return (
         <tr >
+            <td className="text-center">
+                {project.imageUrl ? (
+                    <img
+                        src={project.imageUrl}
+                        alt={project.title || 'Project image'}
+                        style={{ width: '64px', height: '64px', objectFit: 'cover', borderRadius: '8px' }}
+                    />
+                ) : '-'}
+            </td>
             <td className="text-center"> {project.title || ''} </td>
             <td className="text-center"> {project.completion ? new Date(project.completion).toLocaleDateString() : ''} </td>
             <td className="text-center"> {project.description || ''} </td>
