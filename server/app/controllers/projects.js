@@ -1,7 +1,24 @@
 const { getFirestore } = require('firebase-admin/firestore');
+const { getStorage } = require('firebase-admin/storage');
+
+const bucket = getStorage().bucket();
 const db = getFirestore();
 
 let { projectModel } = require('../models/projectsFb');
+
+const deleteStorageImage = async (imagePath) => {
+    if (!imagePath) {
+        return;
+    }
+
+    try {
+        await bucket.file(imagePath).delete();
+    } catch (error) {
+        if (error.code !== 404) {
+            console.log('Error deleting Storage image:', error);
+        }
+    }
+};
 
 module.exports.add = async function (req, res, next) {
     try {
@@ -55,7 +72,14 @@ module.exports.update = async function (req, res, next) {
             throw new Error(`Project not updated. Are you sure it exists?`);
         }
 
-        await docRef.update(updatedProject)
+        const existingProject = docSnapshot.data() || {}; // Get a instance of the project object.
+        await docRef.update(updatedProject); // Update in the database
+
+        // Delete the old image from Firebase Storage if it exists and is different from the new one
+        if (existingProject.imagePath && existingProject.imagePath !== updatedProject.imagePath) {
+            await deleteStorageImage(existingProject.imagePath);
+        }
+
         console.log("Updated successfully.");
 
         res.json({
@@ -78,8 +102,14 @@ module.exports.remove = async function (req, res, next) {
         if (!docSnapshot.exists) {
             throw new Error(`Project not updated. Are you sure it exists?`);
         }
+        const existingProject = docSnapshot.data() || {}; // Get a instance of the project object.
 
         await docRef.delete();
+
+        // Delete the image from Firebase Storage if it exists
+        if (existingProject.imagePath) {
+            await deleteStorageImage(existingProject.imagePath);
+        }
 
         res.json({
             success: true,
@@ -98,9 +128,9 @@ module.exports.getAll = async function (req, res, next) {
         let list = [];
 
         snapshot.forEach(doc => {
-            list.push({ 
-                id: doc.id, 
-                ...doc.data() 
+            list.push({
+                id: doc.id,
+                ...doc.data()
             })
         });
 

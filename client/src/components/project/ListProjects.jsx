@@ -54,6 +54,7 @@ function ListProjet() {
                             <thead>
                                 {/* -- Header Row-- */}
                                 <tr>
+                                    <th className="text-center">Image</th>
                                     <th className="text-center">Title</th>
                                     <th className="text-center">Completion</th>
                                     <th className="text-center">Description</th>
