@@ -7,7 +7,7 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 const MODEL_NAME = "gemini-3.6-flash"; //gemini-1.0-pro;
-const API_KEY = "AQ.Ab8RN6JKX6NmUg67odWkgYh6UwnBFeoxeBlJAR5pYDgsammcjA"; // Replace with your actual API key
+const API_KEY = "AQ.placeholder"; // Replace with your actual API key
 
 const GENERATION_CONFIG = {
     temperature: 0.9,
