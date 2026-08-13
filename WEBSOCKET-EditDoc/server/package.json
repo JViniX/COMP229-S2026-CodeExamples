@@ -1,0 +1,19 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Blessing",
+  "license": "ISC",
+  "dependencies": {
+    "install": "^0.13.0",
+    "npm": "^10.8.2",
+    "or": "^0.2.0",
+    "uuid": "^10.0.0",
+    "websocket": "^1.0.35",
+    "ws": "^8.21.3"
+  }
+}
